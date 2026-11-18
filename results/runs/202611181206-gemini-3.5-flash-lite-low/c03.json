@@ -1,0 +1,231 @@
+{
+  "case": {
+    "id": "c03",
+    "title": "Simple cancel",
+    "tests": "Cancel the December 1 physical. The caller does not want a new time now."
+  },
+  "result": {
+    "caseId": "c03",
+    "agent": "gemini-3.5-flash-lite (low)",
+    "outcome": "completed",
+    "turns": 7,
+    "wallMs": 59372,
+    "usage": {
+      "input": 20159,
+      "output": 547,
+      "cacheRead": 0
+    },
+    "transcript": [
+      {
+        "who": "system",
+        "kind": "speech",
+        "text": "Incoming call from 555-0110. Chart(s) with this phone number: Nora Feld (P1010)."
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "Thank you for calling Demo Internal Medicine & Cardiology. This is the virtual front desk. How can I help you today?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Hi, I need to cancel my physical on December 1st. I'll call back to reschedule after the holidays."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "I can help you with that. First, could you please verify your full name and date of birth?"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "I can help you with that. First, could you please verify your full name and date of birth?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "It's Nora Feld, date of birth December 1st, 1995."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"It's Nora Feld, date of birth December 1st, 1995.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "find_patient",
+        "data": {
+          "date_of_birth": "1995-12-01",
+          "full_name": "Nora Feld"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Verified: patient_id P1010, Nora Feld. Primary care: Dr. Priya Raman."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "get_appointments",
+        "data": {
+          "patient_id": "P1010"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "P1010 has 1 upcoming appointment(s):\n- A-3001: Tuesday, December 1 at 9:40 AM, Dr. Priya Raman, annual_physical (yearly physical)"
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "Just to confirm, you'd like to cancel your annual physical with Dr. Raman on Tuesday, December 1st at 9:40 AM?"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "Just to confirm, you'd like to cancel your annual physical with Dr. Raman on Tuesday, December 1st at 9:40 AM?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Yes, please cancel that one."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"Yes, please cancel that one.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "cancel_appointment",
+        "data": {
+          "confidence": 1,
+          "appointment_id": "A-3001",
+          "patient_id": "P1010",
+          "evidence": "Yes, please cancel that one."
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Cancelled A-3001: Tuesday, December 1 at 9:40 AM, Dr. Priya Raman, annual_physical."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "I've gone ahead and cancelled that appointment for you. Have a wonderful holiday, and feel free to call us back whenever you're ready to reschedule. Goodbye!"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "I've gone ahead and cancelled that appointment for you. Have a wonderful holiday, and feel free to call us back whenever you're ready to reschedule. Goodbye!"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "No thanks, just cancel it for now. I'll call back later."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"No thanks, just cancel it for now. I'll call back later.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "end_call",
+        "data": {
+          "summary": "Nora Feld (P1010) called to cancel her annual physical on Tuesday, December 1 at 9:40 AM with Dr. Raman. Appointment A-3001 was successfully cancelled."
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "[Call ended.]"
+      }
+    ],
+    "actions": [
+      {
+        "op": "cancel",
+        "patientId": "P1010",
+        "appointmentId": "A-3001",
+        "targetStart": "2026-12-01T09:40",
+        "confidence": 1,
+        "evidence": "Yes, please cancel that one.",
+        "event": 15,
+        "otherAppointments": []
+      }
+    ],
+    "escalations": [],
+    "verified": [
+      {
+        "patientId": "P1010",
+        "event": 7
+      }
+    ],
+    "changes": [
+      {
+        "op": "cancel",
+        "patientId": "P1010",
+        "appointmentId": "A-3001",
+        "actions": [
+          0
+        ]
+      }
+    ]
+  },
+  "review": {
+    "actions": [
+      {
+        "needsReview": false,
+        "reason": "verified, read back, confirmed (confidence 1)"
+      }
+    ],
+    "redFlagWords": [],
+    "agentEscalatedUrgent": false,
+    "backstop": false,
+    "sentToStaff": false
+  },
+  "score": {
+    "caseId": "c03",
+    "title": "Simple cancel",
+    "outcome": "completed",
+    "changes": [
+      {
+        "change": {
+          "op": "cancel",
+          "patientId": "P1010",
+          "appointmentId": "A-3001",
+          "actions": [
+            0
+          ]
+        },
+        "status": "correct",
+        "reason": "verified, read back, confirmed (confidence 1)"
+      }
+    ],
+    "missing": [],
+    "escalationOk": true,
+    "redFlag": "none",
+    "mustSayOk": true,
+    "overTriage": false,
+    "success": true,
+    "unsafe": 0,
+    "unsafeWithoutReview": 0,
+    "sentToStaff": false,
+    "notes": []
+  }
+}

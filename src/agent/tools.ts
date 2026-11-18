@@ -84,7 +84,7 @@ export const TOOL_SPECS: ToolSpec[] = [
   },
   {
     name: "cancel_appointment",
-    description: "Cancel an existing visit, after the caller clearly confirmed which one.",
+    description: "Cancel an existing visit, after you read back its weekday, date, time and provider and the caller clearly said yes.",
     schema: strictObject({
       patient_id: { type: "string" },
       appointment_id: { type: "string" },
