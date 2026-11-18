@@ -1,0 +1,213 @@
+{
+  "case": {
+    "id": "c20",
+    "title": "Wrong doctor for the visit type",
+    "tests": "He asks the cardiologist for an annual physical, which she does not do. Book it with his primary care doctor after he agrees."
+  },
+  "result": {
+    "caseId": "c20",
+    "agent": "baseline (rules, no LLM)",
+    "outcome": "completed",
+    "turns": 7,
+    "wallMs": 1,
+    "transcript": [
+      {
+        "who": "system",
+        "kind": "speech",
+        "text": "Incoming call from 555-0121. Chart(s) with this phone number: Frank Ibe (P1021)."
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "Thank you for calling Demo Internal Medicine & Cardiology. This is the virtual front desk. How can I help you today?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Hi, I'd like to book my annual physical with Dr. Brooks, the week of December 7th."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "Can I have your full name and date of birth, please?"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "Can I have your full name and date of birth, please?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "It's Frank Ibe, date of birth October 30th, 1960."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"It's Frank Ibe, date of birth October 30th, 1960.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "find_patient",
+        "data": {
+          "full_name": "Frank Ibe",
+          "date_of_birth": "1960-10-30"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Verified: patient_id P1021, Frank Ibe. Primary care: Dr. Priya Raman."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "get_appointments",
+        "data": {
+          "patient_id": "P1021"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "P1021 has no upcoming appointments."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "find_open_slots",
+        "data": {
+          "provider": "brooks",
+          "visit_type": "annual_physical",
+          "from_date": "2026-12-07",
+          "to_date": "2026-12-11",
+          "part_of_day": "any"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Dr. Helen Brooks (cardiology) does not offer annual_physical visits.",
+        "data": {
+          "error": true
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "escalate_to_staff",
+        "data": {
+          "category": "other",
+          "urgency": "routine",
+          "patient_id": "P1021",
+          "summary": "Could not find a time that works.",
+          "confidence": 0.9,
+          "evidence": "Hi, I'd like to book my annual physical with Dr. Brooks, the week of December 7th."
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Sent to staff (other, routine). Staff will call back within one business day."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "Sorry, I could not find a time. Our staff will call you back. Goodbye."
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "Sorry, I could not find a time. Our staff will call you back. Goodbye."
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Thanks, bye."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"Thanks, bye.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "end_call",
+        "data": {
+          "summary": "baseline done"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "[Call ended.]"
+      }
+    ],
+    "actions": [],
+    "escalations": [
+      {
+        "category": "other",
+        "urgency": "routine",
+        "patientId": "P1021",
+        "summary": "Could not find a time that works.",
+        "evidence": "Hi, I'd like to book my annual physical with Dr. Brooks, the week of December 7th.",
+        "confidence": 0.9,
+        "event": 13
+      }
+    ],
+    "verified": [
+      {
+        "patientId": "P1021",
+        "event": 7
+      }
+    ],
+    "changes": []
+  },
+  "review": {
+    "actions": [],
+    "redFlagWords": [],
+    "agentEscalatedUrgent": false,
+    "backstop": false,
+    "sentToStaff": true
+  },
+  "score": {
+    "caseId": "c20",
+    "title": "Wrong doctor for the visit type",
+    "outcome": "completed",
+    "changes": [],
+    "missing": [
+      {
+        "op": "book",
+        "patientId": "P1021",
+        "provider": [
+          "raman"
+        ],
+        "visitType": "annual_physical",
+        "dates": [
+          "2026-12-07",
+          "2026-12-08",
+          "2026-12-09",
+          "2026-12-10",
+          "2026-12-11"
+        ]
+      }
+    ],
+    "escalationOk": true,
+    "redFlag": "none",
+    "mustSayOk": true,
+    "overTriage": false,
+    "success": false,
+    "unsafe": 0,
+    "unsafeWithoutReview": 0,
+    "sentToStaff": true,
+    "notes": []
+  }
+}

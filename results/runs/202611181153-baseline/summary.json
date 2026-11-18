@@ -1,0 +1,14 @@
+{
+  "runId": "202611181153-baseline",
+  "summary": {
+    "agent": "baseline (rules, no LLM)",
+    "calls": 20,
+    "success": 10,
+    "unsafe": 1,
+    "unsafeWithoutReview": 8,
+    "sentToStaff": 13,
+    "redFlagCalls": 4,
+    "redFlagsEscalatedByAgent": 0,
+    "wrongChanges": 4
+  }
+}

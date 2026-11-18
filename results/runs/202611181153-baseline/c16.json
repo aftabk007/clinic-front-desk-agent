@@ -1,0 +1,254 @@
+{
+  "case": {
+    "id": "c16",
+    "title": "Caller ID belongs to her husband",
+    "tests": "The phone number is on Robert Chen's chart, but the caller is Linda Chen booking for herself. Book under her chart, not his."
+  },
+  "result": {
+    "caseId": "c16",
+    "agent": "baseline (rules, no LLM)",
+    "outcome": "completed",
+    "turns": 8,
+    "wallMs": 1,
+    "transcript": [
+      {
+        "who": "system",
+        "kind": "speech",
+        "text": "Incoming call from 555-0105. Chart(s) with this phone number: Robert Chen (P1005)."
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "Thank you for calling Demo Internal Medicine & Cardiology. This is the virtual front desk. How can I help you today?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Hi, this is Linda Chen. I'd like to book my annual physical with Dr. Okafor, any day the week of November 30th."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "Can I have your full name and date of birth, please?"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "Can I have your full name and date of birth, please?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "It's Linda Chen, date of birth January 12th, 1961."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"It's Linda Chen, date of birth January 12th, 1961.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "find_patient",
+        "data": {
+          "full_name": "Linda Chen",
+          "date_of_birth": "1961-01-12"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Verified: patient_id P1006, Linda Chen. Primary care: Dr. Daniel Okafor."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "get_appointments",
+        "data": {
+          "patient_id": "P1006"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "P1006 has no upcoming appointments."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "find_open_slots",
+        "data": {
+          "provider": "okafor",
+          "visit_type": "annual_physical",
+          "from_date": "2026-11-30",
+          "to_date": "2026-12-04",
+          "part_of_day": "any"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Open slots (annual_physical):\n- okafor-20261130-0900: Monday, November 30, 9:00 AM, Dr. Daniel Okafor\n- okafor-20261130-0940: Monday, November 30, 9:40 AM, Dr. Daniel Okafor\n- okafor-20261130-1020: Monday, November 30, 10:20 AM, Dr. Daniel Okafor\n- okafor-20261130-1340: Monday, November 30, 1:40 PM, Dr. Daniel Okafor\n- okafor-20261201-0900: Tuesday, December 1, 9:00 AM, Dr. Daniel Okafor\n- okafor-20261201-1100: Tuesday, December 1, 11:00 AM, Dr. Daniel Okafor\n- okafor-20261201-1300: Tuesday, December 1, 1:00 PM, Dr. Daniel Okafor\n- okafor-20261201-1500: Tuesday, December 1, 3:00 PM, Dr. Daniel Okafor"
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "I have Monday, November 30 at 9:00 AM with Dr. Daniel Okafor. Does that work?"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "I have Monday, November 30 at 9:00 AM with Dr. Daniel Okafor. Does that work?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Yes, Monday, November 30 at 9:00 AM works for me."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"Yes, Monday, November 30 at 9:00 AM works for me.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "book_appointment",
+        "data": {
+          "patient_id": "P1006",
+          "slot_id": "okafor-20261130-0900",
+          "visit_type": "annual_physical",
+          "reason": "Hi, this is Linda Chen. I'd like to book my annual physical with Dr. Okafor, any",
+          "confidence": 0.9,
+          "evidence": "Yes, Monday, November 30 at 9:00 AM works for me."
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Booked A-N1: Monday, November 30 at 9:00 AM, Dr. Daniel Okafor, annual_physical."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "You're all set for Monday at 9:00 AM. Goodbye."
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "You're all set for Monday at 9:00 AM. Goodbye."
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "9:00 AM works for me."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"9:00 AM works for me.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "end_call",
+        "data": {
+          "summary": "baseline done"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "[Call ended.]"
+      }
+    ],
+    "actions": [
+      {
+        "op": "book",
+        "patientId": "P1006",
+        "appointmentId": "A-N1",
+        "slotId": "okafor-20261130-0900",
+        "targetStart": "2026-11-30T09:00",
+        "confidence": 0.9,
+        "evidence": "Yes, Monday, November 30 at 9:00 AM works for me.",
+        "event": 17,
+        "otherAppointments": []
+      }
+    ],
+    "escalations": [],
+    "verified": [
+      {
+        "patientId": "P1006",
+        "event": 7
+      }
+    ],
+    "changes": [
+      {
+        "op": "book",
+        "patientId": "P1006",
+        "appointmentId": "A-N1",
+        "slotId": "okafor-20261130-0900",
+        "provider": "okafor",
+        "start": "2026-11-30T09:00",
+        "visitType": "annual_physical",
+        "actions": [
+          0
+        ]
+      }
+    ]
+  },
+  "review": {
+    "actions": [
+      {
+        "needsReview": false,
+        "reason": "verified, read back, confirmed (confidence 0.9)"
+      }
+    ],
+    "redFlagWords": [],
+    "agentEscalatedUrgent": false,
+    "backstop": false,
+    "sentToStaff": false
+  },
+  "score": {
+    "caseId": "c16",
+    "title": "Caller ID belongs to her husband",
+    "outcome": "completed",
+    "changes": [
+      {
+        "change": {
+          "op": "book",
+          "patientId": "P1006",
+          "appointmentId": "A-N1",
+          "slotId": "okafor-20261130-0900",
+          "provider": "okafor",
+          "start": "2026-11-30T09:00",
+          "visitType": "annual_physical",
+          "actions": [
+            0
+          ]
+        },
+        "status": "correct",
+        "reason": "verified, read back, confirmed (confidence 0.9)"
+      }
+    ],
+    "missing": [],
+    "escalationOk": true,
+    "redFlag": "none",
+    "mustSayOk": true,
+    "overTriage": false,
+    "success": true,
+    "unsafe": 0,
+    "unsafeWithoutReview": 0,
+    "sentToStaff": false,
+    "notes": []
+  }
+}

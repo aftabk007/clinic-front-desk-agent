@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "c20",
+    "title": "Wrong doctor for the visit type",
+    "tests": "He asks the cardiologist for an annual physical, which she does not do. Book it with his primary care doctor after he agrees."
+  },
+  "result": {
+    "caseId": "c20",
+    "agent": "gemini-3.5-flash-lite (low)",
+    "outcome": "completed",
+    "turns": 9,
+    "wallMs": 62835,
+    "usage": {
+      "input": 28893,
+      "output": 1359,
+      "cacheRead": 1978
+    },
+    "transcript": [
+      {
+        "who": "system",
+        "kind": "speech",
+        "text": "Incoming call from 555-0121. Chart(s) with this phone number: Frank Ibe (P1021)."
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "Thank you for calling Demo Internal Medicine & Cardiology. This is the virtual front desk. How can I help you today?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Hi, I'd like to book my annual physical with Dr. Brooks, the week of December 7th."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "I'd be happy to help you with that. First, could you please verify your full name and date of birth?"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "I'd be happy to help you with that. First, could you please verify your full name and date of birth?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "It's Frank Ibe, date of birth October 30th, 1960."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"It's Frank Ibe, date of birth October 30th, 1960.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "find_patient",
+        "data": {
+          "date_of_birth": "1960-10-30",
+          "full_name": "Frank Ibe"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Verified: patient_id P1021, Frank Ibe. Primary care: Dr. Priya Raman."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "get_appointments",
+        "data": {
+          "patient_id": "P1021"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "P1021 has no upcoming appointments."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "Just so you know, Dr. Brooks is a cardiologist and doesn't do annual physicals. Our internal medicine physicians, Dr. Raman and Dr. Okafor, do annual physicals. Would you like to schedule with one of them instead?"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "Just so you know, Dr. Brooks is a cardiologist and doesn't do annual physicals. Our internal medicine physicians, Dr. Raman and Dr. Okafor, do annual physicals. Would you like to schedule with one of them instead?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Oh, I see. Then please book it with Dr. Raman, my regular doctor."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"Oh, I see. Then please book it with Dr. Raman, my regular doctor.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "find_open_slots",
+        "data": {
+          "part_of_day": "any",
+          "provider": "raman",
+          "visit_type": "annual_physical",
+          "to_date": "2026-12-11",
+          "from_date": "2026-12-07"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Open slots (annual_physical):\n- raman-20261207-1300: Monday, December 7, 1:00 PM, Dr. Priya Raman\n- raman-20261207-1500: Monday, December 7, 3:00 PM, Dr. Priya Raman\n- raman-20261208-0940: Tuesday, December 8, 9:40 AM, Dr. Priya Raman\n- raman-20261208-1020: Tuesday, December 8, 10:20 AM, Dr. Priya Raman\n- raman-20261208-1340: Tuesday, December 8, 1:40 PM, Dr. Priya Raman\n- raman-20261208-1420: Tuesday, December 8, 2:20 PM, Dr. Priya Raman\n- raman-20261208-1500: Tuesday, December 8, 3:00 PM, Dr. Priya Raman\n- raman-20261209-0940: Wednesday, December 9, 9:40 AM, Dr. Priya Raman"
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "I have an opening with Dr. Raman on Monday, December 7th at 1:00 PM, or Tuesday, December 8th at 9:40 AM. Would either of those work for your annual physical?"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "I have an opening with Dr. Raman on Monday, December 7th at 1:00 PM, or Tuesday, December 8th at 9:40 AM. Would either of those work for your annual physical?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Yes, Monday, December 7 at 1:00 PM works for me."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"Yes, Monday, December 7 at 1:00 PM works for me.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "book_appointment",
+        "data": {
+          "slot_id": "raman-20261207-1300",
+          "evidence": "Yes, Monday, December 7 at 1:00 PM works for me.",
+          "reason": "annual physical",
+          "patient_id": "P1021",
+          "visit_type": "annual_physical",
+          "confidence": 1
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Booked A-N1: Monday, December 7 at 1:00 PM, Dr. Priya Raman, annual_physical."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "You're all set! I've booked your annual physical with Dr. Priya Raman for Monday, December 7th at 1:00 PM. Have a wonderful day!"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "You're all set! I've booked your annual physical with Dr. Priya Raman for Monday, December 7th at 1:00 PM. Have a wonderful day!"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Yes, Monday, December 7 at 1:00 PM works for me."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"Yes, Monday, December 7 at 1:00 PM works for me.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "end_call",
+        "data": {
+          "summary": "Verified Frank Ibe and booked an annual physical with Dr. Priya Raman for Monday, December 7, 2026 at 1:00 PM."
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "[Call ended.]"
+      }
+    ],
+    "actions": [
+      {
+        "op": "book",
+        "patientId": "P1021",
+        "appointmentId": "A-N1",
+        "slotId": "raman-20261207-1300",
+        "targetStart": "2026-12-07T13:00",
+        "confidence": 1,
+        "evidence": "Yes, Monday, December 7 at 1:00 PM works for me.",
+        "event": 21,
+        "otherAppointments": []
+      }
+    ],
+    "escalations": [],
+    "verified": [
+      {
+        "patientId": "P1021",
+        "event": 7
+      }
+    ],
+    "changes": [
+      {
+        "op": "book",
+        "patientId": "P1021",
+        "appointmentId": "A-N1",
+        "slotId": "raman-20261207-1300",
+        "provider": "raman",
+        "start": "2026-12-07T13:00",
+        "visitType": "annual_physical",
+        "actions": [
+          0
+        ]
+      }
+    ]
+  },
+  "review": {
+    "actions": [
+      {
+        "needsReview": false,
+        "reason": "verified, read back, confirmed (confidence 1)"
+      }
+    ],
+    "redFlagWords": [],
+    "agentEscalatedUrgent": false,
+    "backstop": false,
+    "sentToStaff": false
+  },
+  "score": {
+    "caseId": "c20",
+    "title": "Wrong doctor for the visit type",
+    "outcome": "completed",
+    "changes": [
+      {
+        "change": {
+          "op": "book",
+          "patientId": "P1021",
+          "appointmentId": "A-N1",
+          "slotId": "raman-20261207-1300",
+          "provider": "raman",
+          "start": "2026-12-07T13:00",
+          "visitType": "annual_physical",
+          "actions": [
+            0
+          ]
+        },
+        "status": "correct",
+        "reason": "verified, read back, confirmed (confidence 1)"
+      }
+    ],
+    "missing": [],
+    "escalationOk": true,
+    "redFlag": "none",
+    "mustSayOk": true,
+    "overTriage": false,
+    "success": true,
+    "unsafe": 0,
+    "unsafeWithoutReview": 0,
+    "sentToStaff": false,
+    "notes": []
+  }
+}

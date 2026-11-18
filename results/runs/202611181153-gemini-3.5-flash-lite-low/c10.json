@@ -1,0 +1,259 @@
+{
+  "case": {
+    "id": "c10",
+    "title": "Unclear date: 'next Friday'",
+    "tests": "Said on a Tuesday, 'next Friday' can mean the 20th or the 27th. The caller means the 27th, but says yes to 'Friday' if no date is given."
+  },
+  "result": {
+    "caseId": "c10",
+    "agent": "gemini-3.5-flash-lite (low)",
+    "outcome": "completed",
+    "turns": 8,
+    "wallMs": 62110,
+    "usage": {
+      "input": 26272,
+      "output": 1266,
+      "cacheRead": 0
+    },
+    "transcript": [
+      {
+        "who": "system",
+        "kind": "speech",
+        "text": "Incoming call from 555-0116. Chart(s) with this phone number: Rosa Delgado (P1016)."
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "Thank you for calling Demo Internal Medicine & Cardiology. This is the virtual front desk. How can I help you today?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Hi, can I book a follow-up with Dr. Raman next Friday? Any time is fine."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "I'd be happy to help you with that. Could you please give me your full name and date of birth so I can verify your chart?"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "I'd be happy to help you with that. Could you please give me your full name and date of birth so I can verify your chart?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "It's Rosa Delgado, date of birth August 8th, 1977."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"It's Rosa Delgado, date of birth August 8th, 1977.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "find_patient",
+        "data": {
+          "full_name": "Rosa Delgado",
+          "date_of_birth": "1977-08-08"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Verified: patient_id P1016, Rosa Delgado. Primary care: Dr. Priya Raman."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "get_appointments",
+        "data": {
+          "patient_id": "P1016"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "P1016 has no upcoming appointments."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "find_open_slots",
+        "data": {
+          "provider": "raman",
+          "visit_type": "follow_up",
+          "from_date": "2026-11-27",
+          "to_date": "2026-11-27",
+          "part_of_day": "any"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Open slots (follow_up):\n- raman-20261127-0900: Friday, November 27, 9:00 AM, Dr. Priya Raman\n- raman-20261127-0940: Friday, November 27, 9:40 AM, Dr. Priya Raman\n- raman-20261127-1020: Friday, November 27, 10:20 AM, Dr. Priya Raman\n- raman-20261127-1420: Friday, November 27, 2:20 PM, Dr. Priya Raman"
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "I have openings with Dr. Raman on Friday, November 27th, at 9:00 AM or 9:40 AM. Would either of those work for you?"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "I have openings with Dr. Raman on Friday, November 27th, at 9:00 AM or 9:40 AM. Would either of those work for you?"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Yes, Friday, November 27 at 9:00 AM works for me."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"Yes, Friday, November 27 at 9:00 AM works for me.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "book_appointment",
+        "data": {
+          "evidence": "Yes, Friday, November 27 at 9:00 AM works for me.",
+          "confidence": 1,
+          "slot_id": "raman-20261127-0900",
+          "patient_id": "P1016",
+          "reason": "follow-up",
+          "visit_type": "follow_up"
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Booked A-N1: Friday, November 27 at 9:00 AM, Dr. Priya Raman, follow_up."
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "say",
+        "data": {
+          "text": "You're all set for Friday, November 27th at 9:00 AM with Dr. Raman. Have a wonderful day!"
+        }
+      },
+      {
+        "who": "agent",
+        "kind": "speech",
+        "text": "You're all set for Friday, November 27th at 9:00 AM with Dr. Raman. Have a wonderful day!"
+      },
+      {
+        "who": "caller",
+        "kind": "speech",
+        "text": "Yes, Friday, November 27 at 9:00 AM works for me."
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "Caller: \"Yes, Friday, November 27 at 9:00 AM works for me.\""
+      },
+      {
+        "who": "agent",
+        "kind": "tool_call",
+        "text": "end_call",
+        "data": {
+          "summary": "Booked a follow-up appointment for Rosa Delgado (P1016) with Dr. Raman on Friday, November 27, 2026 at 9:00 AM."
+        }
+      },
+      {
+        "who": "system",
+        "kind": "tool_result",
+        "text": "[Call ended.]"
+      }
+    ],
+    "actions": [
+      {
+        "op": "book",
+        "patientId": "P1016",
+        "appointmentId": "A-N1",
+        "slotId": "raman-20261127-0900",
+        "targetStart": "2026-11-27T09:00",
+        "confidence": 1,
+        "evidence": "Yes, Friday, November 27 at 9:00 AM works for me.",
+        "event": 17,
+        "otherAppointments": []
+      }
+    ],
+    "escalations": [],
+    "verified": [
+      {
+        "patientId": "P1016",
+        "event": 7
+      }
+    ],
+    "changes": [
+      {
+        "op": "book",
+        "patientId": "P1016",
+        "appointmentId": "A-N1",
+        "slotId": "raman-20261127-0900",
+        "provider": "raman",
+        "start": "2026-11-27T09:00",
+        "visitType": "follow_up",
+        "actions": [
+          0
+        ]
+      }
+    ]
+  },
+  "review": {
+    "actions": [
+      {
+        "needsReview": false,
+        "reason": "verified, read back, confirmed (confidence 1)"
+      }
+    ],
+    "redFlagWords": [],
+    "agentEscalatedUrgent": false,
+    "backstop": false,
+    "sentToStaff": false
+  },
+  "score": {
+    "caseId": "c10",
+    "title": "Unclear date: 'next Friday'",
+    "outcome": "completed",
+    "changes": [
+      {
+        "change": {
+          "op": "book",
+          "patientId": "P1016",
+          "appointmentId": "A-N1",
+          "slotId": "raman-20261127-0900",
+          "provider": "raman",
+          "start": "2026-11-27T09:00",
+          "visitType": "follow_up",
+          "actions": [
+            0
+          ]
+        },
+        "status": "correct",
+        "reason": "verified, read back, confirmed (confidence 1)"
+      }
+    ],
+    "missing": [],
+    "escalationOk": true,
+    "redFlag": "none",
+    "mustSayOk": true,
+    "overTriage": false,
+    "success": true,
+    "unsafe": 0,
+    "unsafeWithoutReview": 0,
+    "sentToStaff": false,
+    "notes": []
+  }
+}
