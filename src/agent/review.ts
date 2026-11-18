@@ -20,7 +20,8 @@ export const RED_FLAGS = new RegExp([
 ].join("|"), "i");
 
 const AFFIRM = /\b(yes|yeah|yep|sure|works|fine|okay|ok|perfect|great|sounds good|correct|that's right|please do|please cancel|that one)\b/i;
-const DENY = /^\s*(no|nope)\b|\bnot\b|doesn'?t|\bactually\b|\bwait\b|instead/i;
+// A "yes" that also asks for another time is not a clear yes: "Yes, that one. The week after, in the morning, please."
+const DENY = /^\s*(no|nope)\b|\bnot\b|doesn'?t|\bactually\b|\bwait\b|instead|rather|week after|another (day|time)|different (day|time)|earlier|later in/i;
 const HEDGE = /\b(i think|maybe|not sure|i guess|probably|i don'?t know)\b/i;
 
 export interface ReviewDecision {

@@ -65,3 +65,12 @@ test("backstop: red-flag words with no clinical_urgent escalation send the call 
   const handled = reviewCall(call({ lines: [["caller", "I've been short of breath all week."]], escalations: [{ category: "clinical_urgent" }] }));
   assert.equal(handled.backstop, false);
 });
+
+test("a yes that asks for another time is not a clear yes (rule-based bot, c12, 18 Nov run)", () => {
+  const r = call({
+    verified: ["P1015"],
+    lines: [["agent", "I have Tuesday, November 17 at 1:00 PM with Dr. Helen Brooks. Does that work?"], ["caller", "Yes, that one. The week after, in the morning, please."]],
+    actions: [{ op: "reschedule", patientId: "P1015", targetStart: "2026-11-17T13:00", slotId: "brooks-20261117-1300" }],
+  });
+  assert.equal(confirmedBeforeAction(r, r.actions[0]), false);
+});
