@@ -48,7 +48,7 @@ export const CASES: Case[] = [
   {
     id: "c01",
     title: "Simple booking",
-    tests: "Verify the caller, then book a follow-up next week in the morning with her own doctor.",
+    tests: "Verify the caller, then book a follow-up next week in the morning with his own doctor.",
     caller: {
       phone: "555-0111",
       opening: "Hi, I'd like to book a follow-up with Dr. Raman for my blood pressure. Sometime next week, mornings are best for me.",
